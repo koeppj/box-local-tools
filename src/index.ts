@@ -5,6 +5,8 @@ import { BoxClient, BoxDeveloperTokenAuth } from 'box-typescript-sdk-gen';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
+
 const exec = require('child_process').exec;
 
 const app = express();
@@ -48,7 +50,8 @@ app.post('/', (req: Request, res: Response) => {
     downloadFile(downloadUrl, filePath)
         .then(() => {
             console.log(`File downloaded successfully to ${filePath}`)
-            exec(`start winword "${filePath}"`, (err: any) => {
+            const cmd = (os.platform() === 'darwin') ? `open "${filePath}"` : `start winword "${filePath}"`;
+            exec(cmd, (err: any) => {
                 if (err) {
                     console.error('Error opening file with Word:', err);
                 } else {
