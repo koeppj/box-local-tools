@@ -91,3 +91,6 @@ public
 
 # Windows files
 Thumbs.db
+
+# Download files
+downloads/
